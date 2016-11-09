@@ -15,5 +15,13 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+        
+        // Database settings
+        'db' => [
+            'host' => 'localhost',
+            'user' => 'root',
+            'pass' => 'root',
+            'name' => 'klsogo_ecommerce_v2',
+        ],
     ],
 ];

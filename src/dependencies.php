@@ -17,3 +17,10 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
+
+// database
+$container['db'] = function ($c) {
+    $settings = $c['settings']['db'];
+    $db = new DB_MySQLi($settings['host'], $settings['user'], $settings['pass'], $settings['name']);
+    return $db;
+};

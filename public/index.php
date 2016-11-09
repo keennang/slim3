@@ -1,7 +1,4 @@
 <?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
@@ -12,22 +9,26 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+spl_autoload_register(function ($classname) {
+    require __DIR__ . '/../classes/' . $classname . '.php';
+});
 
 session_start();
 
 // Instantiate the app
-$settings = require '../src/settings.php';
+$settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
 
 // Set up dependencies
-require '../src/dependencies.php';
+require __DIR__ . '/../src/dependencies.php';
 
 // Register middleware
-require '../src/middleware.php';
+require __DIR__ . '/../src/middleware.php';
 
 // Register routes
-require '../src/routes.php';
+require __DIR__ . '/../src/routes.php';
 
 // Run app
 $app->run();
