@@ -3,10 +3,18 @@
 
 $container = $app->getContainer();
 
-// view renderer
-$container['renderer'] = function ($c) {
-    $settings = $c->get('settings')['renderer'];
-    return new Slim\Views\PhpRenderer($settings['template_path']);
+// twig renderer
+$container['view'] = function ($c) {
+    $settings = $c->get('settings')['twig'];
+    $view = new \Slim\Views\Twig($settings['template_path'], [
+        'cache' => $settings['cache_path']
+    ]);
+
+    // Instantiate and add Slim specific extension
+    $basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
+    $view->addExtension(new Slim\Views\TwigExtension($c['router'], $basePath));
+
+    return $view;
 };
 
 // monolog
@@ -20,7 +28,7 @@ $container['logger'] = function ($c) {
 
 // database
 $container['db'] = function ($c) {
-    $settings = $c['settings']['db'];
+    $settings = $c->get('settings')['db'];
     $db = new DB_MySQLi($settings['host'], $settings['user'], $settings['pass'], $settings['name']);
     return $db;
 };

@@ -12,10 +12,9 @@ class DB_MySQLi
     private $mysqli;
     public $result;
     private $stmt;
-    public $debug = false;
 
     // Initiate database handler
-    function __construct($host, $user, $pass, $name)
+    public function __construct($host, $user, $pass, $name)
     {
         // Initiate MySQLi
         if (!$this->mysqli = mysqli_init()) {
@@ -28,7 +27,7 @@ class DB_MySQLi
     }
 
     // Select database for query operation
-    function select_db($name)
+    public function select_db($name)
     {
         if (!$this->mysqli->select_db($name)) {
             exit();
@@ -36,7 +35,7 @@ class DB_MySQLi
     }
 
     // Perform query on database and return result
-    function query($sql)
+    public function query($sql)
     {
         $this->mysqli->query("/*!40101 set names 'utf8' */");
         $this->result = $this->mysqli->query($sql);
@@ -47,7 +46,7 @@ class DB_MySQLi
         return $this->result;
     }
 
-    function prepare($sql)
+    public function prepare($sql)
     {
         $this->stmt = $this->mysqli->prepare($sql);
 
@@ -56,7 +55,7 @@ class DB_MySQLi
         }
     }
 
-    function bind_param()
+    public function bind_param()
     {
         $count = func_num_args();
         $args = func_get_args();
@@ -77,13 +76,13 @@ class DB_MySQLi
         call_user_func_array(array($this->stmt, 'bind_param'), $refs);
     }
 
-    function execute()
+    public function execute()
     {
         $this->stmt->execute();
     }
 
     // Fetch single row result into associative array
-    function fetch()
+    public function fetch()
     {
         $row = array();
         if ($this->stmt) {
@@ -100,7 +99,7 @@ class DB_MySQLi
     }
 
     // Fetch multiple row result into associative array
-    function fetch_array()
+    public function fetch_array()
     {
         $data = array();
         if ($this->stmt) {
@@ -122,13 +121,13 @@ class DB_MySQLi
     }
 
     // Get number of rows in result
-    function num_rows()
+    public function num_rows()
     {
         if ($this->stmt) {
 			$this->stmt->execute();
             $this->stmt->store_result();
             $num_rows = $this->stmt->num_rows;
-            $this->stmt->free_result();
+            $this->free_result();
         } else {
             $num_rows = $this->result->num_rows;
         }
@@ -137,25 +136,29 @@ class DB_MySQLi
     }
 
     // Get number of affected rows in previous operation
-    function affected_rows()
+    public function affected_rows()
     {
         return ($this->stmt) ? $this->stmt->affected_rows : $this->mysqli->affected_rows;
     }
 
     // Get ID generated from previous INSERT operation
-    function insert_id()
+    public function insert_id()
     {
         return ($this->stmt) ? $this->stmt->insert_id : $this->mysqli->insert_id;
     }
 
     // Frees memory associated with result
-    function free_result()
+    public function free_result()
     {
-        $this->result->free();
+        if ($this->stmt) {
+            $this->stmt->free_result();
+        } else {
+            $this->result->free();
+        }
     }
 
     // Close connection
-    function close()
+    public function close()
     {
         $this->mysqli->close();
     }
