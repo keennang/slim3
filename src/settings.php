@@ -8,6 +8,8 @@ return [
         'twig' => [
             'template_path' => __DIR__ . '/../templates/',
             'cache_path' => __DIR__ . '/../cache/',
+            'debug' => true,
+            'auto_reload' => true,
         ],
 
         // Monolog settings

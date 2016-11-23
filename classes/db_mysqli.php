@@ -4,7 +4,7 @@
  * DB MySQLi
  *
  * @author Wong Keen Nang
- * @copyright 2015 Wong Keen Nang
+ * @copyright 2015-2016 Wong Keen Nang
  * @version 1.3, 2016-11-04
  */
 class DB_MySQLi
@@ -39,7 +39,7 @@ class DB_MySQLi
     {
         $this->mysqli->query("/*!40101 set names 'utf8' */");
         $this->result = $this->mysqli->query($sql);
-        if (!$this->result && $this->debug) {
+        if (!$this->result) {
             $err_msg = print_r($this->mysqli->error, true) . ".<br><span style='color:#666;'>[{$sql}]</span>";
             die("Query failed with error. {$err_msg}");
         }
