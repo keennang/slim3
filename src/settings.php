@@ -1,4 +1,5 @@
 <?php
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -24,7 +25,7 @@ return [
             'host' => 'localhost',
             'user' => 'root',
             'pass' => 'root',
-            'name' => 'klsogo_ecommerce_v2',
+            'name' => '',
         ],
 
         // General settings

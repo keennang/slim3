@@ -1,9 +1,8 @@
 <?php
-// Routes
 
 $app->get('/test/general[/{name}]', function ($request, $response, $args) {
     // Sample log message
-    $this->logger->info("Slim-Skeleton '/test/*' route");
+    $this->logger->info("Slim-Skeleton '/test/*' route", array("key"=>"value", 'key2'=>'value2'));
 
     // Read app settings
     $settings = $this->get('settings')['site'];
@@ -22,7 +21,7 @@ $app->get('/test/general[/{name}]', function ($request, $response, $args) {
     $data['mwdata'] = $request->getAttribute('mwdata');
 
     // Write to page via twig
-    return $this->view->render($response, 'index.html', $data);
+    return $this->view->render($response, 'test.html', $data);
 })->setName("test-general")->add($mw);
 
 $app->get('/', function ($request, $response, $args) {
@@ -30,5 +29,5 @@ $app->get('/', function ($request, $response, $args) {
 
     $data = array();
 
-    return $this->view->render($response, 'index.html', $data);
+    return $this->view->render($response, 'base.html', $data);
 })->setName("landing");

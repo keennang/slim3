@@ -5,7 +5,11 @@
 
 $app->add(function ($req, $res, $next) {
     //DO SOMETHING BEFORE THE REQUEST IS PROCESSED
-    $res = $next($req, $res); //PROCESS THE REQUEST
+    $req = $req->withAttribute('session', 'i come from middleware');
+
+    //PROCESS THE REQUEST
+    $res = $next($req, $res);
+    
     //DO SOMETHING AFTER THE REQUEST HAS BEEN PROCESSED
     if ($res->getStatusCode() > 500) {
         //Do something with a server error, maybe email someone or submit a bug report
