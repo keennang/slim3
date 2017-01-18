@@ -27,11 +27,5 @@ return [
             'pass' => 'root',
             'name' => '',
         ],
-
-        // General settings
-        'site' => [
-            'path' => 'http://localhost:8000',
-            'title' => 'SLIM3',
-        ],
     ],
 ];
