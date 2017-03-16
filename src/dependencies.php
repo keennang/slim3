@@ -30,7 +30,7 @@ $container['logger'] = function ($c) {
 };
 
 // database
-$container['pdo'] = function ($c) {
+$container['db'] = function ($c) {
     $settings = $c->get('settings')['db'];
     $dsn = "mysql:host={$settings['host']};dbname={$settings['name']};charset={$settings['charset']}";
     $opt = [
@@ -38,8 +38,8 @@ $container['pdo'] = function ($c) {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
-    $pdo = new PDO($dsn, $settings['user'], $settings['pass'], $opt);
-    return $pdo;
+    $db = new PDO($dsn, $settings['user'], $settings['pass'], $opt);
+    return $db;
 };
 
 // mail
