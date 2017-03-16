@@ -26,6 +26,16 @@ return [
             'user' => 'root',
             'pass' => 'root',
             'name' => '',
+            'charset' => 'utf8',
+        ],
+
+        // Mail settings
+        'mail' => [
+            'host' => '',
+            'port' => '',
+            'secure' => '',
+            'username' => '',
+            'password' => '',
         ],
     ],
 ];

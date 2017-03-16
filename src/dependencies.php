@@ -30,8 +30,34 @@ $container['logger'] = function ($c) {
 };
 
 // database
-$container['db'] = function ($c) {
+$container['pdo'] = function ($c) {
     $settings = $c->get('settings')['db'];
-    $db = new DB_MySQLi($settings['host'], $settings['user'], $settings['pass'], $settings['name']);
-    return $db;
+    $dsn = "mysql:host={$settings['host']};dbname={$settings['name']};charset={$settings['charset']}";
+    $opt = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+    $pdo = new PDO($dsn, $settings['user'], $settings['pass'], $opt);
+    return $pdo;
+};
+
+// mail
+$container['mail'] = function ($c) {
+    $settings = $c->get('settings')['mail'];
+    $mail = new PHPMailer;
+    $mail->SMTPDebug = 0;
+    $mail->Debugoutput = 'html';
+    if ($settings['host']) {
+        $mail->isSMTP();
+        $mail->Host = $settings['host'];
+        $mail->Port = $settings['port'];
+        $mail->SMTPSecure = $settings['secure'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $settings['username'];
+        $mail->Password = $settings['password'];
+    } else {
+        $mail->isSendmail();
+    }
+    return $mail;
 };
