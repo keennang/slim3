@@ -23,6 +23,7 @@ return [
         // Database settings
         'db' => [
             'host' => 'localhost',
+            'port' => '',
             'user' => 'root',
             'pass' => 'root',
             'name' => '',

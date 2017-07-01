@@ -33,6 +33,9 @@ $container['logger'] = function ($c) {
 $container['db'] = function ($c) {
     $settings = $c->get('settings')['db'];
     $dsn = "mysql:host={$settings['host']};dbname={$settings['name']};charset={$settings['charset']}";
+    if ($settings['port']) {
+        $dsn .= ";port={$settings['port']}";
+    }
     $opt = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
