@@ -66,3 +66,8 @@ $container['mail'] = function ($c) {
     }
     return $mail;
 };
+
+// controller
+$container['TestController'] = function($c) {
+    return new Controllers\TestController($c);
+};

@@ -9,6 +9,11 @@
             "name": "Josh Lockhart",
             "email": "info@joshlockhart.com",
             "homepage": "http://www.joshlockhart.com/"
+        },
+        {
+            "name": "Wong Keen Nang",
+            "email": "keennang@gmail.com",
+            "homepage": "https://www.keennang.com/"
         }
     ],
     "require": {
@@ -25,12 +30,12 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Controllers\\": "controllers/"
         }
     },
 	"scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit"
 	}
-
 }
