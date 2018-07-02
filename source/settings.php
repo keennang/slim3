@@ -4,11 +4,12 @@ return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
+        'determineRouteBeforeAppMiddleware' => true,
 
         // Twig Renderer settings
         'twig' => [
-            'template_path' => __DIR__ . '/../templates/',
-            'cache_path' => __DIR__ . '/../cache/',
+            'template_path' => __DIR__ . '/templates/',
+            'cache_path' => __DIR__ . '/cache/',
             'debug' => true,
             'auto_reload' => true,
         ],
@@ -16,7 +17,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'slim-app',
-            'path' => __DIR__ . '/../logs/app.log',
+            'path' => __DIR__ . '/logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
         
@@ -33,10 +34,13 @@ return [
         // Mail settings
         'mail' => [
             'host' => '',
-            'port' => '',
-            'secure' => '',
             'username' => '',
             'password' => '',
+            'secure' => '',
+            'port' => 2525,
+            'sender_email' => 'name@domain.com',
+            'sender_name' => 'name',
+            'debug' => false,
         ],
     ],
 ];

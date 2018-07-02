@@ -48,10 +48,6 @@
     <a href="{{ path_for('test-general', {'name':'keen'}) }}">{{ path_for('test-general', {'name':'keen'}) }}</a>
 </div>
 
-<div class="test middleware-data">
-    {{ mwdata }}
-</div>
-
 {% block content %}{% endblock %}
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -59,7 +55,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
-<script src="{{ base_url() }}/js/validator.min.js"></script>
 <script>
     $(function () {
 

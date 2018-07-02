@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 class TestController extends Controller
 {
@@ -22,7 +22,6 @@ class TestController extends Controller
         if (isset($args['name']) && $args['name']) {
             $data['name'] = $args['name'];
         }
-        $data['mwdata'] = $request->getAttribute('mwdata');
 
         // Write to page via twig
         return $this->view->render($response, 'test.html', $data);

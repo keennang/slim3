@@ -14,6 +14,9 @@ $container['view'] = function ($c) {
 
     $view->addExtension(new Twig_Extension_Debug());
 
+    $protocol = ($c['environment']['HTTPS'] == 'off') ? 'http://' : 'https://';
+    $view->getEnvironment()->addGlobal('host', $protocol . $c['environment']['HTTP_HOST']);
+
     $basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
     $view->addExtension(new Slim\Views\TwigExtension($c['router'], $basePath));
 
@@ -50,24 +53,45 @@ $container['db'] = function ($c) {
 // mail
 $container['mail'] = function ($c) {
     $settings = $c->get('settings')['mail'];
-    $mail = new PHPMailer;
-    $mail->SMTPDebug = 0;
-    $mail->Debugoutput = 'html';
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+    if ($settings['debug']) {
+        $mail->SMTPDebug = 4;
+        $mail->Debugoutput = 'html';
+    }
     if ($settings['host']) {
         $mail->isSMTP();
         $mail->Host = $settings['host'];
-        $mail->Port = $settings['port'];
-        $mail->SMTPSecure = $settings['secure'];
         $mail->SMTPAuth = true;
         $mail->Username = $settings['username'];
         $mail->Password = $settings['password'];
+        $mail->SMTPSecure = $settings['secure'];
+        $mail->Port = $settings['port'];
     } else {
         $mail->isSendmail();
     }
+    $mail->setFrom($settings['sender_email'], $settings['sender_name']);
+    $mail->isHTML(true);
     return $mail;
+};
+
+// validator
+$container['validator'] = function($c) {
+    return new App\Validation\Validator;
+};
+
+// csrf
+$container['csrf'] = function($c) {
+    return new \Slim\Csrf\Guard;
 };
 
 // controller
 $container['TestController'] = function($c) {
-    return new Controllers\TestController($c);
+    return new App\Controllers\TestController($c);
 };
+
+// middleware
+$app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
+$app->add(new \App\Middleware\InputMiddleware($container));
+$app->add(new \App\Middleware\CsrfMiddleware($container));
+
+$app->add($container->csrf);
